@@ -1,0 +1,35 @@
+name: cashe_register
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment: 
+  sdk: '>=2.19.6 <3.0.0'
+
+dependencies: 
+  get: 4.6.5
+  flutter: 
+    sdk: flutter
+  intl: ^0.17.0
+  image_picker: ^0.8.7+4
+  cloud_firestore: ^4.7.1
+  firebase_storage: ^11.2.1
+  firebase_auth: ^4.6.1
+  firebase_core: ^2.13.0
+  flutter_lints: 2.0.1
+  uuid: ^3.0.7
+  
+  
+
+dev_dependencies: 
+  flutter_test: 
+    sdk: flutter
+
+flutter: 
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
+  fonts:
+    - family: Gentium
+      fonts:
+        - asset: assets/fonts/Gentium.ttf

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "841740201857",
+    "project_id": "casheregister",
+    "storage_bucket": "casheregister.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:841740201857:android:dac58e344f3562f0618280",
+        "android_client_info": {
+          "package_name": "com.example.cashe_register"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "841740201857-2vaq7fu87opb4na9s3qffh8qfk0nf4dr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBURWzltzJvLWcV_edg-xPtVJjHrWlwJDk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "841740201857-2vaq7fu87opb4na9s3qffh8qfk0nf4dr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

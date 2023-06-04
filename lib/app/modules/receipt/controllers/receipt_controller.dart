@@ -18,19 +18,44 @@ class ReceiptController extends GetxController {
   ReceiptController()
       : storage = FirebaseStorage.instance,
         storageRef = FirebaseStorage.instance.ref().child('texts');
+
+    var formattedTime = DateFormat('HH:mm').format(DateTime.now());
+    var formattedDate = DateFormat('dd/ MM  /y').format(DateTime.now());
+    
   Rx<String> mainCatValue = '~'.obs;
-
   Rx<String> subCategValue = '~'.obs;
-
   RxList<String> subCategList = <String>[].obs;
   Rx<String> lvlCategValue = "~".obs;
-
   RxDouble kItemExtent = 0.0.obs;
+  RxInt index = 0.obs;
+  Rx<bool> processing = false.obs;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
   final firstNameController = TextEditingController();
-
   final amountController = TextEditingController();
+
+   
+    
+  Future<void> uploadReceipt() async {
+    if (mainCatValue.value != '*' ||
+        subCategValue != '~' ||
+        lvlCategValue.value != "~") {
+      if (formKey.currentState!.validate()) {
+        formKey.currentState!.save();
+        processing.value = true;
+      }
+    }
+  }
+
+  void uploadProduct() async {
+    await uploadReceipt().whenComplete(() => addInvoice());
+
+    mainCatValue.value = '*';
+
+    subCategValue.value = '~';
+    formKey.currentState!.reset();
+
+    processing.value = false;
+  }
 
   void showSnackBar() {
     const GetSnackBar(
@@ -41,25 +66,12 @@ class ReceiptController extends GetxController {
     );
   }
 
-  RxInt index = 0.obs;
   void addInvoice() async {
     String formattedData = DateFormat('dd-MM-yyyy').format(DateTime.now());
     String formattedTime = DateFormat('HH:mm').format(DateTime.now());
-
     CollectionReference receipt =
         FirebaseFirestore.instance.collection('receipt');
     var uid = Uuid().v4();
-    // invoices.add(Invoice(
-    //   course: mainCatValue.value,
-    //   lvl: lvlCategValue.value,
-    //   teacher: subCategValue.value,
-    //   firstName: firstNameController.text,
-    //   amount: amountController.text,
-    //   invoiceNumber: '${invoices.length + 1}',
-    //   date: formattedData,
-    //   time: formattedTime,
-    //   sId: FirebaseAuth.instance.currentUser!.uid,
-    // ));
     await receipt.doc(uid).set({
       "course": mainCatValue.value,
       "lvl": lvlCategValue.value,

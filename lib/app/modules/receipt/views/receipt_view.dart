@@ -48,9 +48,7 @@ class _ReceiptViewState extends State<ReceiptView> {
 
   @override
   Widget build(BuildContext context) {
-    var me = DateTime.now();
-    var formattedTime = DateFormat('HH:mm').format(me);
-    var formattedDate = DateFormat('dd/ MM  /y').format(me);
+  
     final sizeWidth = MediaQuery.of(context).size.width;
     final sizeHeight = MediaQuery.of(context).size.height;
     return ScaffoldMessenger(
@@ -59,8 +57,6 @@ class _ReceiptViewState extends State<ReceiptView> {
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: CustomAppBar(
               text: AppText.receipt.toUpperCase(),
-              // textAlign: TextAlign.center,
-              // style: AppTextStyle.whiteS24FGen,
               child: IconButton(
                 onPressed: () {
                   _homeController.navigateToHomeView(context);
@@ -182,14 +178,14 @@ class _ReceiptViewState extends State<ReceiptView> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(formattedTime,
+                                Text(_receiptController.formattedTime,
                                     textAlign: TextAlign.center,
                                     style: AppTextStyle.w700S16),
                                 const SizedBox(
                                   height: 20,
                                   width: 20,
                                 ),
-                                Text(formattedDate,
+                                Text(_receiptController.formattedDate,
                                     textAlign: TextAlign.center,
                                     style: AppTextStyle.w700S16),
                               ],
@@ -259,25 +255,31 @@ class _ReceiptViewState extends State<ReceiptView> {
                           ),
                           InkWell(
                               onTap: () {
-                                _receiptController.addInvoice();
+                                _receiptController.uploadProduct();
                               },
                               // circul == true
                               //     CircularProgressIndicator(
                               //         color: Colors.black,
                               //       )
                               //     :
-                              child: Container(
-                                height: sizeHeight * 0.065,
-                                width: sizeWidth * 0.8,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: AppColors.green50,
-                                ),
-                                child: Center(
-                                  child: Text(AppText.payment.toUpperCase(),
-                                      style: AppTextStyle.whiteS16W700FGen),
-                                ),
-                              )),
+                              child: _receiptController.processing.value == true
+                                  ? CircularProgressIndicator(
+                                      color: Colors.black,
+                                    )
+                                  : Container(
+                                      height: sizeHeight * 0.065,
+                                      width: sizeWidth * 0.8,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: AppColors.green50,
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                            AppText.payment.toUpperCase(),
+                                            style:
+                                                AppTextStyle.whiteS16W700FGen),
+                                      ),
+                                    )),
                         ],
                       ),
                     ),

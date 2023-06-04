@@ -1,15 +1,6 @@
 import 'package:cashe_register/app/constans/app_text.dart';
 
-// List<dynamic> mainteach = [
-//   '*',
-//   'Mr.Olymjon',
-//   'Ms.Aisha',
-//   'Janibek',
-//   'Mufazzalhon',
-//   'Rahmatullo',
-//   'Zumradhon',
-//   'Bairbek',
-// ];
+
 const List<String> selectCoursLevel = [
   '~',
   '1 cours',

@@ -11,7 +11,14 @@ class AuthController extends GetxController {
   static AuthController instance = Get.find();
   late Rx<User?> _user;
   FirebaseAuth auth = FirebaseAuth.instance;
-
+  RxBool isVisible = true.obs;
+  Rx <String> password = ''.obs;
+  Rx <String> eMail = ''.obs;
+final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldMessengerState> scaffoldKey =
+      GlobalKey<ScaffoldMessengerState>();
+  var emailConroller = TextEditingController();
+  var passwordConroller = TextEditingController();
   @override
   void onReady() {
     super.onReady();
@@ -52,5 +59,12 @@ class AuthController extends GetxController {
         HomeView(),
       );
     }
+  }
+  
+}
+extension EmailValidator on String {
+  bool isValidEmail() {
+    return RegExp(r'^([a-zA-Z0-9]+)([@])([a-zA-Z0-9]+)([\-\_\.])([a-z]{2,3})$')
+        .hasMatch(this);
   }
 }

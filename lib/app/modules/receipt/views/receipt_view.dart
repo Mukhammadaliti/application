@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cashe_register/app/constans/app_colors.dart';
 import 'package:cashe_register/app/constans/app_text.dart';
 import 'package:cashe_register/app/constans/app_text_styles.dart';
@@ -104,134 +106,75 @@ class _ReceiptViewState extends State<ReceiptView> {
                           SizedBox(
                             width: sizeWidth * 0.85,
                             height: sizeHeight * 0.18,
-                            child: Obx(
-                              () => Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  CupertinoButton(
-                                    padding: EdgeInsets.zero,
-                                    onPressed: () {
-                                      if (_receiptController
-                                              .selectCoursName.value ==
-                                          0) {
-                                        _showDialog(
-                                          CupertinoPicker(
-                                            magnification: 1.22,
-                                            squeeze: 1.2,
-                                            useMagnifier: true,
-                                            itemExtent: _receiptController
-                                                .subCategValue.value as double,
-                                            onSelectedItemChanged:
-                                                (int selectedItem) {
-                                              setState(() {
-                                                _receiptController
-                                                        .mainCatValue.value =
-                                                    selectedItem.toString();
-                                              });
-                                            },
-                                            children: List<Widget>.generate(
-                                                mainCoursName.length,
-                                                (int index) {
-                                              return Center(
-                                                child: Text(
-                                                  mainCoursName[index],
-                                                ),
-                                              );
-                                            }),
-                                          ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Obx(() => DropdownButton(
+                                      iconSize: 40,
+                                      iconEnabledColor: Colors.red,
+                                      iconDisabledColor: Colors.black,
+                                      dropdownColor: Colors.yellow.shade400,
+                                      disabledHint: Text('*'),
+                                      value:
+                                          _receiptController.mainCatValue.value,
+                                      items: mainCoursName
+                                          .map<DropdownMenuItem<String>>(
+                                              (value) {
+                                        return DropdownMenuItem(
+                                          child: Text(value),
+                                          value: value,
                                         );
-                                      }
-                                      ;
-                                    },
-                                    child: Text(
-                                      mainCoursName[_receiptController
-                                          .selectCoursName.value],
-                                      style: const TextStyle(
-                                        fontSize: 22.0,
-                                      ),
-                                    ),
-                                  ),
-                                  const VerticalDividerWidget(),
-                                  CupertinoButton(
-                                    padding: EdgeInsets.zero,
-                                    onPressed: () {
-                                      _showDialog(
-                                        CupertinoPicker(
-                                          magnification: 1.22,
-                                          squeeze: 1.2,
-                                          useMagnifier: true,
-                                          itemExtent: _receiptController
-                                              .subCategValue.value as double,
-                                          onSelectedItemChanged:
-                                              (int selectedItem) {
-                                            setState(() {
-                                              _receiptController
-                                                  .selectCoursTeach
-                                                  .value = selectedItem;
-                                            });
-                                          },
-                                          children: List<Widget>.generate(
-                                              mainCoursName.length,
-                                              (int index) {
-                                            return Center(
-                                              child: Text(
-                                                mainCoursName[index],
-                                              ),
-                                            );
-                                          }),
-                                        ),
-                                      );
-                                    },
-                                    child: Text(
-                                      mainCoursName[_receiptController
-                                          .selectCoursTeach.value],
-                                      style: const TextStyle(
-                                        fontSize: 22.0,
-                                      ),
-                                    ),
-                                  ),
-                                  const VerticalDividerWidget(),
-                                  CupertinoButton(
-                                    padding: EdgeInsets.zero,
-                                    onPressed: () {
-                                      _showDialog(
-                                        CupertinoPicker(
-                                          magnification: 1.22,
-                                          squeeze: 1.2,
-                                          useMagnifier: true,
-                                          itemExtent: _receiptController
-                                              .subCategValue.value as double,
-                                          onSelectedItemChanged:
-                                              (int selectedItem) {
-                                            setState(() {
-                                              _receiptController
-                                                  .selectCoursLevel
-                                                  .value = selectedItem;
-                                            });
-                                          },
-                                          children: List<Widget>.generate(
-                                              selectCoursLevel.length,
-                                              (int index) {
-                                            return Center(
-                                              child: Text(
-                                                selectCoursLevel[index],
-                                              ),
-                                            );
-                                          }),
-                                        ),
-                                      );
-                                    },
-                                    child: Text(
-                                      selectCoursLevel[_receiptController
-                                          .selectCoursLevel.value],
-                                      style: const TextStyle(
-                                        fontSize: 22.0,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                      }).toList(),
+                                      onChanged: (String? value) {
+                                        _receiptController
+                                            .selectedMainCateg(value);
+                                      },
+                                    )),
+                                const VerticalDividerWidget(),
+                                Obx(() => DropdownButton(
+                                      iconSize: 40,
+                                      iconEnabledColor: Colors.red,
+                                      iconDisabledColor: Colors.black,
+                                      dropdownColor: Colors.yellow.shade400,
+                                      disabledHint: Text('~'),
+                                      value: _receiptController
+                                          .subCategValue.value,
+                                      items: _receiptController.subCategList
+                                          .map<DropdownMenuItem<String>>(
+                                              (value) {
+                                        return DropdownMenuItem(
+                                          child: Text(value),
+                                          value: value,
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? value) {
+                                        _receiptController.subCategValue.value =
+                                            value!;
+                                      },
+                                    )),
+                                const VerticalDividerWidget(),
+                                Obx(() => DropdownButton(
+                                      iconSize: 40,
+                                      iconEnabledColor: Colors.red,
+                                      iconDisabledColor: Colors.black,
+                                      dropdownColor: Colors.yellow.shade400,
+                                      disabledHint: Text('~'),
+                                      value: _receiptController
+                                          .lvlCategValue.value,
+                                      items: selectCoursLevel
+                                          .map<DropdownMenuItem<String>>(
+                                              (value) {
+                                        return DropdownMenuItem(
+                                          child: Text(value),
+                                          value: value,
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? value) {
+                                        _receiptController.lvlCategValue.value =
+                                            value!;
+                                      },
+                                    )),
+                              ],
                             ),
                           ),
                           Padding(
@@ -319,7 +262,7 @@ class _ReceiptViewState extends State<ReceiptView> {
                                 _receiptController.addInvoice();
                               },
                               // circul == true
-                              //     ? CircularProgressIndicator(
+                              //     CircularProgressIndicator(
                               //         color: Colors.black,
                               //       )
                               //     :
@@ -350,3 +293,42 @@ class _ReceiptViewState extends State<ReceiptView> {
 }
 
 ReceiptView receiptView = const ReceiptView();
+
+                                  // CupertinoButton(
+                                  //   padding: EdgeInsets.zero,
+                                  //   onPressed: () {
+                                  //     _showDialog(
+                                  //       CupertinoPicker(
+                                  //         magnification: 1.22,
+                                  //         squeeze: 1.2,
+                                  //         useMagnifier: true,
+                                  //         itemExtent: _receiptController
+                                  //             .subCategValue.value as double,
+                                  //         onSelectedItemChanged:
+                                  //             (int selectedItem) {
+                                  //           setState(() {
+                                  //             _receiptController
+                                  //                 .selectCoursLevel
+                                  //                 .value = selectedItem;
+                                  //           });
+                                  //         },
+                                  //         children: List<Widget>.generate(
+                                  //             selectCoursLevel.length,
+                                  //             (int index) {
+                                  //           return Center(
+                                  //             child: Text(
+                                  //               selectCoursLevel[index],
+                                  //             ),
+                                  //           );
+                                  //         }),
+                                  //       ),
+                                  //     );
+                                  //   },
+                                  //   child: Text(
+                                  //     selectCoursLevel[_receiptController
+                                  //         .selectCoursLevel.value],
+                                  //     style: const TextStyle(
+                                  //       fontSize: 22.0,
+                                  //     ),
+                                  //   ),
+                                  // ),

@@ -19,22 +19,26 @@ class ReceiptController extends GetxController {
       : storage = FirebaseStorage.instance,
         storageRef = FirebaseStorage.instance.ref().child('texts');
 
-    var formattedTime = DateFormat('HH:mm').format(DateTime.now());
-    var formattedDate = DateFormat('dd/ MM  /y').format(DateTime.now());
-    
+  var formattedTime = DateFormat('HH:mm').format(DateTime.now());
+  var formattedDate = DateFormat('dd/ MM  /y').format(DateTime.now());
+
   Rx<String> mainCatValue = '~'.obs;
   Rx<String> subCategValue = '~'.obs;
   RxList<String> subCategList = <String>[].obs;
   Rx<String> lvlCategValue = "~".obs;
-  RxDouble kItemExtent = 0.0.obs;
-  RxInt index = 0.obs;
+
+  Rx<int> index = 1.obs;
   Rx<bool> processing = false.obs;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final firstNameController = TextEditingController();
   final amountController = TextEditingController();
 
-   
-    
+  add() {
+    if (index.value == index.value) {
+      return index.value ++;
+    }
+  }
+
   Future<void> uploadReceipt() async {
     if (mainCatValue.value != '*' ||
         subCategValue != '~' ||
@@ -48,10 +52,9 @@ class ReceiptController extends GetxController {
 
   void uploadProduct() async {
     await uploadReceipt().whenComplete(() => addInvoice());
-
-    mainCatValue.value = '*';
-
+    mainCatValue.value = '~';
     subCategValue.value = '~';
+    lvlCategValue.value = '~';
     formKey.currentState!.reset();
 
     processing.value = false;
@@ -78,7 +81,7 @@ class ReceiptController extends GetxController {
       "teacher": subCategValue.value,
       "firstName": firstNameController.text,
       "amount": amountController.text,
-      "invoiceNumber": index.toString().length + 1,
+      "invoiceNumber": add(),
       "date": formattedData,
       "time": formattedTime,
       "sId": FirebaseAuth.instance.currentUser!.uid,

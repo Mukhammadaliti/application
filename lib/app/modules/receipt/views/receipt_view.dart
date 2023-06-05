@@ -48,7 +48,6 @@ class _ReceiptViewState extends State<ReceiptView> {
 
   @override
   Widget build(BuildContext context) {
-  
     final sizeWidth = MediaQuery.of(context).size.width;
     final sizeHeight = MediaQuery.of(context).size.height;
     return ScaffoldMessenger(
@@ -256,6 +255,7 @@ class _ReceiptViewState extends State<ReceiptView> {
                           InkWell(
                               onTap: () {
                                 _receiptController.uploadProduct();
+                                // _receiptController.add();
                               },
                               // circul == true
                               //     CircularProgressIndicator(

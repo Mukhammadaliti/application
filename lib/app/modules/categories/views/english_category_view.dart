@@ -16,119 +16,125 @@ class EnglishCategory extends StatelessWidget {
     Key? key,
   }) : super(key: key);
   final _homeController = Get.put(HomeController());
-  // final _categoriesController = Get.put(CategoriesController());
-  dynamic productList;
-  final Stream<QuerySnapshot> _productStream =
-      FirebaseFirestore.instance.collection('receipt').snapshots();
+
+  CollectionReference receipts =
+      FirebaseFirestore.instance.collection('receipt');
+  dynamic receiptId;
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-        stream: _productStream,
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    return FutureBuilder<DocumentSnapshot>(
+        future: receipts.doc(receiptId).get(),
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.hasError) {
-            return Text('Something went wrong');
+            return Text("Something went wrong");
           }
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
+          if (snapshot.hasData && !snapshot.data!.exists) {
+            return Text("Document does not exist");
+          }
+
+          if (snapshot.connectionState == ConnectionState.done) {
+            Map<String, dynamic> data =
+                snapshot.data!.data() as Map<String, dynamic>;
+            return Scaffold(
+              appBar: PreferredSize(
+                preferredSize: const Size.fromHeight(kToolbarHeight),
+                child: CustomAppBar(
+                  text: AppText.englText,
+                  child: IconButton(
+                      onPressed: () {
+                        _homeController.navigateToHomeView(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        color: AppColors.whiteF5,
+                      )),
+                ),
+              ),
+              backgroundColor: AppColors.white,
+              body: SingleChildScrollView(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SearchWidget(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      height: 900,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Container(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              height: MediaQuery.of(context).size.height * 0.09,
+                              decoration: BoxDecoration(
+                                  boxShadow: const [
+                                    BoxShadow(
+                                        color: AppColors.grey,
+                                        spreadRadius: 5,
+                                        blurRadius: 7,
+                                        offset: Offset(
+                                          0,
+                                          3,
+                                        ))
+                                  ],
+                                  borderRadius: BorderRadius.circular(10.06),
+                                  color: AppColors.whiteFC),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text('Цена - ${data['amout']} ',
+                                          textAlign: TextAlign.center,
+                                          style: AppTextStyle.black15wBlodFgen),
+                                      Text(
+                                        " ${data['date']}",
+                                        textAlign: TextAlign.center,
+                                        style: AppTextStyle.green16w700,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text("${data['firstName']}",
+                                          textAlign: TextAlign.center,
+                                          style: AppTextStyle.black22wBold),
+                                      Text("${data['invoicesNumber']}",
+                                          textAlign: TextAlign.center,
+                                          style: AppTextStyle.greyOA16wBold),
+                                      Text(
+                                        "${data['time']}",
+                                        textAlign: TextAlign.center,
+                                        style: AppTextStyle.green16w700,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             );
           }
-          return Scaffold(
-            appBar: PreferredSize(
-              preferredSize: const Size.fromHeight(kToolbarHeight),
-              child: CustomAppBar(
-                text: AppText.englText,
-                child: IconButton(
-                    onPressed: () {
-                      _homeController.navigateToHomeView(context);
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back_ios,
-                      color: AppColors.whiteF5,
-                    )),
-              ),
-            ),
-            backgroundColor: AppColors.white,
-            body: SingleChildScrollView(
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SearchWidget(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SizedBox(
-                    height: 900,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Container(
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            height: MediaQuery.of(context).size.height * 0.09,
-                            decoration: BoxDecoration(
-                                boxShadow: const [
-                                  BoxShadow(
-                                      color: AppColors.grey,
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: Offset(
-                                        0,
-                                        3,
-                                      ))
-                                ],
-                                borderRadius: BorderRadius.circular(10.06),
-                                color: AppColors.whiteFC),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Text('Цена - ${productList['amout']} ',
-                                        textAlign: TextAlign.center,
-                                        style: AppTextStyle.black15wBlodFgen),
-                                    Text(
-                                      productList['date'],
-                                      textAlign: TextAlign.center,
-                                      style: AppTextStyle.green16w700,
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Text(productList['firstName'],
-                                        textAlign: TextAlign.center,
-                                        style: AppTextStyle.black22wBold),
-                                    Text(productList['invoicesNumber'],
-                                        textAlign: TextAlign.center,
-                                        style: AppTextStyle.greyOA16wBold),
-                                    Text(
-                                      productList['time'],
-                                      textAlign: TextAlign.center,
-                                      style: AppTextStyle.green16w700,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
+          return Text("Loading");
         });
   }
 }

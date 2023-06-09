@@ -5,12 +5,13 @@ import 'package:cashe_register/app/constans/app_text_styles.dart';
 // import 'package:cashe_register/app/modules/categories/controllers/categories_controller.dart';
 import 'package:cashe_register/app/modules/categories/widgets/search_widget.dart';
 import 'package:cashe_register/app/modules/home/controllers/home_controller.dart';
+import 'package:cashe_register/app/modules/home/widgets/custom_snack_bar.dart';
 import 'package:cashe_register/app/widgets/custom_app_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-// ignore: must_be_immutable
+
 class EnglishCategory extends StatelessWidget {
   EnglishCategory({
     Key? key,
@@ -28,11 +29,11 @@ class EnglishCategory extends StatelessWidget {
         builder:
             (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.hasError) {
-            return Text("Something went wrong");
+            return customSnackBar("Something went wrong", "",'');
           }
 
           if (snapshot.hasData && !snapshot.data!.exists) {
-            return Text("Document does not exist");
+            return customSnackBar("Document does not exist",'','');
           }
 
           if (snapshot.connectionState == ConnectionState.done) {
@@ -134,7 +135,7 @@ class EnglishCategory extends StatelessWidget {
               ),
             );
           }
-          return Text("Loading");
+          return customSnackBar("Loading","","");
         });
   }
 }

@@ -1,4 +1,3 @@
-import 'package:cashe_register/app/constans/app_text.dart';
 
 
 const List<String> selectCoursLevel = [

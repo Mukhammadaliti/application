@@ -9,8 +9,7 @@ dependencies:
   get: 4.6.5
   flutter: 
     sdk: flutter
-  intl: ^0.17.0
-  image_picker: ^0.8.7+4
+  intl: ^0.18.1
   cloud_firestore: ^4.7.1
   firebase_storage: ^11.2.1
   firebase_auth: ^4.6.1

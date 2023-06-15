@@ -1,4 +1,3 @@
-import 'package:cashe_register/app/model/invoice_model.dart';
 
 import 'package:cashe_register/app/utils/categ_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -68,14 +67,14 @@ class ReceiptController extends GetxController {
       ),
     );
   }
+    RxString uid =  const Uuid().v4().obs;
 
   void addInvoice() async {
     String formattedData = DateFormat('dd-MM-yyyy').format(DateTime.now());
     String formattedTime = DateFormat('HH:mm').format(DateTime.now());
     CollectionReference receipt =
         FirebaseFirestore.instance.collection('receipt');
-    var uid = Uuid().v4();
-    await receipt.doc(uid).set({
+    await receipt.doc(uid.value).set({
       "course": mainCatValue.value,
       "lvl": lvlCategValue.value,
       "teacher": subCategValue.value,

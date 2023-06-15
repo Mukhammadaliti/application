@@ -1,30 +1,35 @@
 // import 'package:cashe_register/app/model/invoice_model.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CategoriesController extends GetxController {
   final TextEditingController searchController = TextEditingController();
+  // RxList dataList = <String>[].obs;
 
-
-
- 
-
-  // final count = 0.obs;
   // @override
   // void onInit() {
+  //   fetchDataAsList();
   //   super.onInit();
   // }
 
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  // }
+  // Future<void> fetchDataAsList() async {
+  //   try {
+  //     QuerySnapshot querySnapshot =
+  //         await FirebaseFirestore.instance.collection('receipt').get();
 
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
+  //     List<String> newDataList = [];
+  //     querySnapshot.docs.forEach((doc) {
+  //       String data = doc.data()[
+  //           'receipt']; // Замените 'your_field' на имя поля, которое вы хотите получить
+  //       newDataList.add(data);
+  //     });
 
-  // void increment() => count.value++;
+  //     setState(() {
+  //       dataList = newDataList;
+  //     });
+  //   } catch (e) {
+  //     print('Ошибка при получении данных из Firestore: $e');
+  //   }
+  // }
 }

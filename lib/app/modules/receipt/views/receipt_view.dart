@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:cashe_register/app/constans/app_colors.dart';
 import 'package:cashe_register/app/constans/app_text.dart';
@@ -10,7 +9,6 @@ import 'package:cashe_register/app/modules/receipt/widgets/vertical_divider_widg
 import 'package:cashe_register/app/utils/categ_list.dart';
 import 'package:cashe_register/app/widgets/custom_app_bar.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
@@ -109,15 +107,15 @@ class _ReceiptViewState extends State<ReceiptView> {
                                       iconEnabledColor: Colors.red,
                                       iconDisabledColor: Colors.black,
                                       dropdownColor: Colors.yellow.shade400,
-                                      disabledHint: Text('*'),
+                                      disabledHint: const Text('*'),
                                       value:
                                           _receiptController.mainCatValue.value,
                                       items: mainCoursName
                                           .map<DropdownMenuItem<String>>(
                                               (value) {
                                         return DropdownMenuItem(
-                                          child: Text(value),
                                           value: value,
+                                          child: Text(value),
                                         );
                                       }).toList(),
                                       onChanged: (String? value) {
@@ -131,15 +129,15 @@ class _ReceiptViewState extends State<ReceiptView> {
                                       iconEnabledColor: Colors.red,
                                       iconDisabledColor: Colors.black,
                                       dropdownColor: Colors.yellow.shade400,
-                                      disabledHint: Text('~'),
+                                      disabledHint: const Text('~'),
                                       value: _receiptController
                                           .subCategValue.value,
                                       items: _receiptController.subCategList
                                           .map<DropdownMenuItem<String>>(
                                               (value) {
                                         return DropdownMenuItem(
-                                          child: Text(value),
                                           value: value,
+                                          child: Text(value),
                                         );
                                       }).toList(),
                                       onChanged: (String? value) {
@@ -153,15 +151,15 @@ class _ReceiptViewState extends State<ReceiptView> {
                                       iconEnabledColor: Colors.red,
                                       iconDisabledColor: Colors.black,
                                       dropdownColor: Colors.yellow.shade400,
-                                      disabledHint: Text('~'),
+                                      disabledHint: const Text('~'),
                                       value: _receiptController
                                           .lvlCategValue.value,
                                       items: selectCoursLevel
                                           .map<DropdownMenuItem<String>>(
                                               (value) {
                                         return DropdownMenuItem(
-                                          child: Text(value),
                                           value: value,
+                                          child: Text(value),
                                         );
                                       }).toList(),
                                       onChanged: (String? value) {
@@ -263,7 +261,7 @@ class _ReceiptViewState extends State<ReceiptView> {
                               //       )
                               //     :
                               child: _receiptController.processing.value == true
-                                  ? CircularProgressIndicator(
+                                  ? const CircularProgressIndicator(
                                       color: Colors.black,
                                     )
                                   : Container(

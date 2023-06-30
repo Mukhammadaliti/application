@@ -65,7 +65,7 @@ class MatematicsCategory extends StatelessWidget {
                     height: 20,
                   ),
                   SearchWidget(),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   SizedBox(

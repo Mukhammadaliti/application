@@ -1,28 +1,29 @@
 import 'package:cashe_register/app/constans/app_colors.dart';
 import 'package:cashe_register/app/constans/app_text.dart';
 import 'package:cashe_register/app/constans/app_text_styles.dart';
-import 'package:cashe_register/app/modules/categories/views/sub_category_view.dart';
+
 import 'package:cashe_register/app/modules/categories/widgets/search_widget.dart';
 import 'package:cashe_register/app/modules/home/controllers/home_controller.dart';
 import 'package:cashe_register/app/modules/receipt/controllers/receipt_controller.dart';
-import 'package:cashe_register/app/utils/categ_list.dart';
+
 import 'package:cashe_register/app/widgets/custom_app_bar.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class EnglishCategory extends StatelessWidget {
   EnglishCategory({
     Key? key,
   }) : super(key: key);
   final _homeController = Get.put(HomeController());
   final _receiptController = Get.put(ReceiptController());
-  // final double? index;
+
   CollectionReference receipts =
       FirebaseFirestore.instance.collection('receipt');
 
-  // .orderBy("course", descending: true) as CollectionReference<Object?>;
+
 
   GlobalKey<ScaffoldMessengerState> scaffoldKey =
       GlobalKey<ScaffoldMessengerState>();
@@ -84,108 +85,73 @@ class EnglishCategory extends StatelessWidget {
                         height: MediaQuery.of(context).size.height * 0.7,
                         width: MediaQuery.of(context).size.width * 0.99,
                         child: Column(
-                          // crossAxisAlignment: CrossAxisAlignment.start,
+                      
                           children: [
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.7,
-                              child: GridView.count(
-                                mainAxisSpacing: 20,
-                                crossAxisSpacing: 2,
-                                crossAxisCount: 1,
-                                children:
-                                    List.generate(english.length, (index) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => SubCategoryView(
-                                            subCategName: english[index],
-                                            mainCategName: 'English',
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    child: Column(
+                           SizedBox(
+                        height: 900,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: 
+                      Container(
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.09,
+                                decoration: BoxDecoration(
+                                    boxShadow: const [
+                                      BoxShadow(
+                                          color: AppColors.grey,
+                                          spreadRadius: 5,
+                                          blurRadius: 7,
+                                          offset: Offset(
+                                            0,
+                                            3,
+                                          ))
+                                    ],
+                                    borderRadius: BorderRadius.circular(10.06),
+                                    color: AppColors.whiteFC),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
                                       children: [
-                                        Text(english[index]),
-                                        Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.8,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.09,
-                                          decoration: BoxDecoration(
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                    color: AppColors.grey,
-                                                    spreadRadius: 5,
-                                                    blurRadius: 7,
-                                                    offset: Offset(
-                                                      0,
-                                                      3,
-                                                    ))
-                                              ],
-                                              borderRadius:
-                                                  BorderRadius.circular(10.06),
-                                              color: AppColors.whiteFC),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                children: [
-                                                  Text(
-                                                      'Цена - ${data['amount']} ',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: AppTextStyle
-                                                          .black15wBlodFgen),
-                                                  Text(
-                                                    " ${data['date']}",
-                                                    textAlign: TextAlign.center,
-                                                    style: AppTextStyle
-                                                        .green16w700,
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                children: [
-                                                  Text("${data['firstName']}",
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: AppTextStyle
-                                                          .black22wBold),
-                                                  Text(
-                                                      "${data['invoicesNumber']}",
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: AppTextStyle
-                                                          .greyOA16wBold),
-                                                  // Text(
-                                                  //   "${data['time']}",
-                                                  //   textAlign: TextAlign.center,
-                                                  // ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
+                                        Text('Цена - ${data['amount']} ',
+                                            textAlign: TextAlign.center,
+                                            style:
+                                                AppTextStyle.black15wBlodFgen),
+                                        Text(
+                                          " ${data['date']}",
+                                          textAlign: TextAlign.center,
+                                          style: AppTextStyle.green16w700,
                                         ),
                                       ],
                                     ),
-                                  );
-                                }),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Text("${data['firstName']}",
+                                            textAlign: TextAlign.center,
+                                            style: AppTextStyle.black22wBold),
+                                        Text("${data['invoicesNumber']}",
+                                            textAlign: TextAlign.center,
+                                            style: AppTextStyle.greyOA16wBold),
+                                        // Text(
+                                        //   "${data['time']}",
+                                        //   textAlign: TextAlign.center,
+                                        // ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            )
+                            );
+                          },
+                        ),
+                      ),
                           ],
                         ),
                       ),
@@ -203,67 +169,67 @@ class EnglishCategory extends StatelessWidget {
 }
 
 // SizedBox(
-                      //   height: 900,
-                      //   child: ListView.builder(
-                      //     shrinkWrap: true,
-                      //     itemBuilder: (context, index) {
-                      //       return ListTile(
-                      //         title: 
-                      // Container(
-                      //           width: MediaQuery.of(context).size.width * 0.8,
-                      //           height:
-                      //               MediaQuery.of(context).size.height * 0.09,
-                      //           decoration: BoxDecoration(
-                      //               boxShadow: const [
-                      //                 BoxShadow(
-                      //                     color: AppColors.grey,
-                      //                     spreadRadius: 5,
-                      //                     blurRadius: 7,
-                      //                     offset: Offset(
-                      //                       0,
-                      //                       3,
-                      //                     ))
-                      //               ],
-                      //               borderRadius: BorderRadius.circular(10.06),
-                      //               color: AppColors.whiteFC),
-                      //           child: Column(
-                      //             mainAxisAlignment: MainAxisAlignment.center,
-                      //             children: [
-                      //               Row(
-                      //                 mainAxisAlignment:
-                      //                     MainAxisAlignment.spaceAround,
-                      //                 children: [
-                      //                   Text('Цена - ${data['amount']} ',
-                      //                       textAlign: TextAlign.center,
-                      //                       style:
-                      //                           AppTextStyle.black15wBlodFgen),
-                      //                   Text(
-                      //                     " ${data['date']}",
-                      //                     textAlign: TextAlign.center,
-                      //                     style: AppTextStyle.green16w700,
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //               Row(
-                      //                 mainAxisAlignment:
-                      //                     MainAxisAlignment.spaceAround,
-                      //                 children: [
-                      //                   Text("${data['firstName']}",
-                      //                       textAlign: TextAlign.center,
-                      //                       style: AppTextStyle.black22wBold),
-                      //                   Text("${data['invoicesNumber']}",
-                      //                       textAlign: TextAlign.center,
-                      //                       style: AppTextStyle.greyOA16wBold),
-                      //                   // Text(
-                      //                   //   "${data['time']}",
-                      //                   //   textAlign: TextAlign.center,
-                      //                   // ),
-                      //                 ],
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         ),
-                      //       );
-                      //     },
-                      //   ),
-                      // ),
+//                         height: 900,
+//                         child: ListView.builder(
+//                           shrinkWrap: true,
+//                           itemBuilder: (context, index) {
+//                             return ListTile(
+//                               title: 
+//                       Container(
+//                                 width: MediaQuery.of(context).size.width * 0.8,
+//                                 height:
+//                                     MediaQuery.of(context).size.height * 0.09,
+//                                 decoration: BoxDecoration(
+//                                     boxShadow: const [
+//                                       BoxShadow(
+//                                           color: AppColors.grey,
+//                                           spreadRadius: 5,
+//                                           blurRadius: 7,
+//                                           offset: Offset(
+//                                             0,
+//                                             3,
+//                                           ))
+//                                     ],
+//                                     borderRadius: BorderRadius.circular(10.06),
+//                                     color: AppColors.whiteFC),
+//                                 child: Column(
+//                                   mainAxisAlignment: MainAxisAlignment.center,
+//                                   children: [
+//                                     Row(
+//                                       mainAxisAlignment:
+//                                           MainAxisAlignment.spaceAround,
+//                                       children: [
+//                                         Text('Цена - ${data['amount']} ',
+//                                             textAlign: TextAlign.center,
+//                                             style:
+//                                                 AppTextStyle.black15wBlodFgen),
+//                                         Text(
+//                                           " ${data['date']}",
+//                                           textAlign: TextAlign.center,
+//                                           style: AppTextStyle.green16w700,
+//                                         ),
+//                                       ],
+//                                     ),
+//                                     Row(
+//                                       mainAxisAlignment:
+//                                           MainAxisAlignment.spaceAround,
+//                                       children: [
+//                                         Text("${data['firstName']}",
+//                                             textAlign: TextAlign.center,
+//                                             style: AppTextStyle.black22wBold),
+//                                         Text("${data['invoicesNumber']}",
+//                                             textAlign: TextAlign.center,
+//                                             style: AppTextStyle.greyOA16wBold),
+//                                         // Text(
+//                                         //   "${data['time']}",
+//                                         //   textAlign: TextAlign.center,
+//                                         // ),
+//                                       ],
+//                                     ),
+//                                   ],
+//                                 ),
+//                               ),
+//                             );
+//                           },
+//                         ),
+//                       ),
